@@ -3,12 +3,16 @@ import cosas.*
 object casaDePepeYJulian {
 
     const compras = []
+    var cuenta = "definir cuenta"
 
-    met
+    method definirCuenta(cuenta_) {
+        cuenta = cuenta_
+    }
     method lista() = compras
 
     method comprar(cosa){
         compras.add(cosa)
+        cuenta.extraer(cosa.precio())
     }
 
     method cantidadDeCosasCompradas() = compras.size()
@@ -70,10 +74,47 @@ object cuentaCorriente {
     }
 
     method extraer(valor) {
-        if(saldo < valor){
-            return 'No tiene saldo suficiente'
-        } else {
-            saldo = saldo - dinero
+        if(saldo < valor) {
+            self.error("No tiene saldo suficiente")
+                } else {
+            saldo = saldo - valor
         }
     }
+}
+
+object cuentaDeGastos {
+    var saldo = 500
+    const costoOperacion = 20
+
+    method saldo() = saldo 
+
+    method depositar(dinero) {
+        if (dinero > 1000){
+            self.error("No se puede depositar más de 1000")
+        } else {
+            saldo = saldo + dinero - costoOperacion
+        }
+    }
+
+    method extraer(valor) {
+        saldo = saldo - valor
+    }
+}
+
+object miAsserter {
+
+    //Esto devuelve true si el bloque lanzó una exception
+    //Devuelve false si no lanzó una expcion
+    method assertException(unBloque) {
+      
+      try {
+        unBloque.apply()
+        return false // Esto se ejecuta solamente si no hay un error
+      }
+      catch e: Exception {
+        return true //Esto se va a ejecutar si hay un error 
+      }
+
+    }
+
 }
